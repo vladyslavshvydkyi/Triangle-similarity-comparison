@@ -1,0 +1,30 @@
+from typing import List, Tuple
+Coords = List[Tuple[int, int]]
+
+
+def similar_triangles(coords_1: Coords, coords_2: Coords) -> bool:
+    import math
+    #  3 sides of triangle length using Pythagorean theorem:
+    
+    a1=((coords_1[0][0]-coords_1[1][0])**2+(coords_1[0][1]-coords_1[1][1])**2)**(0.5)
+    b1=((coords_1[1][0]-coords_1[2][0])**2+(coords_1[1][1]-coords_1[2][1])**2)**(0.5)
+    c1=((coords_1[2][0]-coords_1[0][0])**2+(coords_1[2][1]-coords_1[0][1])**2)**(0.5)
+    # Law of cosines for each angle and arccos rounded for 5 digits to reduce Math.acos innacuracies
+    alpha1=round(math.acos((a1**2+b1**2-c1**2)/(2*a1*b1)),5)
+    beta1=round(math.acos((b1**2+c1**2-a1**2)/(2*b1*c1)),5)
+    gamma1=round(math.acos((c1**2+a1**2-b1**2)/(2*c1*a1)),5)
+    
+    angles1=sorted([alpha1,beta1,gamma1])
+    # Second Triangle
+    a2=((coords_2[0][0]-coords_2[1][0])**2+(coords_2[0][1]-coords_2[1][1])**2)**(0.5)
+    b2=((coords_2[1][0]-coords_2[2][0])**2+(coords_2[1][1]-coords_2[2][1])**2)**(0.5)
+    c2=((coords_2[2][0]-coords_2[0][0])**2+(coords_2[2][1]-coords_2[0][1])**2)**(0.5)
+    alpha2=round(math.acos((a2**2+b2**2-c2**2)/(2*a2*b2)),5)
+    beta2=round(math.acos((b2**2+c2**2-a2**2)/(2*b2*c2)),5)
+    gamma2=round(math.acos((c2**2+a2**2-b2**2)/(2*c2*a2)),5)
+    angles2=sorted([alpha2,beta2,gamma2])
+    # Angles lists comparison
+    
+    if angles1!=angles2:
+        return False
+    return True
